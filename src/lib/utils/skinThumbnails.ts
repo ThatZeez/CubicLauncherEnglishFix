@@ -3,6 +3,7 @@
  * Una tarjeta no gira ni se anima, así que no necesita un contexto WebGL propio.
  */
 
+import { t } from "#lib/i18n/index.js";
 import { createStage, releaseStage } from "#lib/utils/skin3dStage.js";
 import {
 	createThumbnailQueue,
@@ -33,7 +34,10 @@ async function makeStagePainter(): Promise<ThumbnailPainter> {
 			return new Promise<Blob>((resolve, reject) => {
 				stage.canvas.toBlob((blob) => {
 					if (blob) resolve(blob);
-					else reject(new Error("No se pudo dibujar la skin"));
+					else
+						reject(
+							new Error(t("userMenu.skinCloset.thumbnailError")),
+						);
 				});
 			});
 		},

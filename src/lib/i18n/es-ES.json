@@ -645,6 +645,7 @@
 		"type": "Tipo",
 		"server": "Servidor",
 		"editName": "Editar nombre",
+		"invalidNameTitle": "Nombre Inválido",
 		"addOffline": "Agregar Offline",
 		"noAccountsTitle": "Sin cuentas",
 		"noAccountsSubtitle": "Agregá una cuenta para comenzar",
@@ -760,6 +761,7 @@
 				"saveAlias": "Guardar",
 				"cancelAlias": "Cancelar",
 				"skinNamePlaceholder": "Nombre de la skin",
+				"thumbnailError": "No se pudo dibujar la skin",
 				"addedTitle": "Skin guardada",
 				"addedDesc": "La skin se añadió a tu armario.",
 				"removedTitle": "Skin eliminada",
@@ -782,6 +784,8 @@
 			"loading": "Conectando con Microsoft...",
 			"waiting": "Esperando autenticación...",
 			"success": "¡Sesión iniciada correctamente!",
+			"connected": "¡Conectado!",
+			"errorTitle": "Error de autenticación",
 			"error": "Error al iniciar sesión: {error}"
 		},
 		"elySkin": {
@@ -1072,6 +1076,7 @@
 		"nameLabel": "Nombre de la Instancia",
 		"namePlaceholder": "Ej. Mi instancia",
 		"versionLabel": "Versión",
+		"descriptionLabel": "Descripción",
 		"detailsTitle": "Detalles",
 		"iconLabel": "Logo de la Instancia",
 		"noVersionsErr": "No hay versiones descargadas",

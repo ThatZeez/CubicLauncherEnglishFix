@@ -1,8 +1,9 @@
 <script lang="ts">
 	import Icon from "#lib/icons/Icon.svelte";
+	import { t } from "#lib/i18n/index.js";
 
 	let {
-		title = "¡Conectado!",
+		title = t("userMenu.authModal.connected"),
 		subtitle = "Tu cuenta ha sido vinculada." as string | undefined,
 	}: {
 		title?: string;

@@ -5,6 +5,7 @@
 	import Icon from "#lib/icons/Icon.svelte";
 	import { getIconPath } from "#lib/icons/registry.js";
 	import { animDuration } from "#lib/utils/animations.js";
+	import { t } from "#lib/i18n/index.js";
 
 	interface Option {
 		value: string;
@@ -19,7 +20,7 @@
 		value = $bindable(),
 		options = [],
 		placeholder = "Seleccionar...",
-		loadingPlaceholder = "Cargando...",
+		loadingPlaceholder = t("common.loading"),
 		disabled = false,
 		loading = false,
 		compact = false,

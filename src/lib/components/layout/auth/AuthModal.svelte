@@ -140,7 +140,7 @@
 			{/if}
 		{:else if error}
 			<AuthError
-				title="Error de autenticación"
+				title={t("userMenu.authModal.errorTitle")}
 				message={t("userMenu.authModal.error", { error }) || error}
 				onRetry={() => method && startAuth(method)}
 			/>

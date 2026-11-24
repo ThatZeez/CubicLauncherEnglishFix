@@ -54,7 +54,9 @@
 				<span class="info-value">{getPackName(packInfo)}</span>
 			</div>
 			<div class="info-row">
-				<span class="info-label">Versión</span>
+				<span class="info-label"
+					>{t("createInstance.versionLabel")}</span
+				>
 				<span class="info-value">{getPackVersion(packInfo)}</span>
 			</div>
 			{#if getPackAuthor(packInfo)}
@@ -65,7 +67,9 @@
 			{/if}
 			{#if getPackSummary(packInfo)}
 				<div class="info-row">
-					<span class="info-label">Descripción</span>
+					<span class="info-label"
+						>{t("createInstance.descriptionLabel")}</span
+					>
 					<span class="info-value summary"
 						>{getPackSummary(packInfo)}</span
 					>

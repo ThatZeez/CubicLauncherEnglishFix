@@ -53,8 +53,8 @@
 		const regex = /^[a-zA-Z0-9_]{3,16}$/;
 		if (!regex.test(editingName)) {
 			showError(
-				"Nombre Inválido",
-				"El nombre debe tener entre 3 y 16 caracteres y solo contener letras, números y guiones bajos (_).",
+				t("userMenu.invalidNameTitle"),
+				t("userMenu.accountSetup.invalidName"),
 			);
 			return;
 		}

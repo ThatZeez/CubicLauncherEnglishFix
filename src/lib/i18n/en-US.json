@@ -645,6 +645,7 @@
 		"type": "Type",
 		"server": "Server",
 		"editName": "Edit name",
+		"invalidNameTitle": "Invalid name",
 		"addOffline": "Add Offline",
 		"noAccountsTitle": "No accounts",
 		"noAccountsSubtitle": "Add an account to get started",
@@ -760,6 +761,7 @@
 				"saveAlias": "Save",
 				"cancelAlias": "Cancel",
 				"skinNamePlaceholder": "Skin name",
+				"thumbnailError": "Could not render the skin preview",
 				"addedTitle": "Skin saved",
 				"addedDesc": "The skin was added to your closet.",
 				"removedTitle": "Skin removed",
@@ -782,6 +784,8 @@
 			"loading": "Connecting to Microsoft...",
 			"waiting": "Waiting for authentication...",
 			"success": "Logged in successfully!",
+			"connected": "Connected!",
+			"errorTitle": "Authentication error",
 			"error": "Failed to login: {error}"
 		},
 		"elySkin": {
@@ -1072,6 +1076,7 @@
 		"nameLabel": "Instance Name",
 		"namePlaceholder": "E.g. My Instance",
 		"versionLabel": "Version",
+		"descriptionLabel": "Description",
 		"detailsTitle": "Details",
 		"iconLabel": "Instance Logo",
 		"noVersionsErr": "No downloaded versions found",
