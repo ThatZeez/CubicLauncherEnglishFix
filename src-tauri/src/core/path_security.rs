@@ -10,7 +10,7 @@ use std::path::{Component, Path, PathBuf};
 pub fn sanitize_path(base: &Path, sub_path: &Path) -> Result<PathBuf, String> {
     if sub_path.is_absolute() {
         return Err(format!(
-            "Ruta absoluta no permitida: '{}'",
+            "Absolute path not allowed: '{}'",
             sub_path.display()
         ));
     }
@@ -18,7 +18,7 @@ pub fn sanitize_path(base: &Path, sub_path: &Path) -> Result<PathBuf, String> {
     for component in sub_path.components() {
         if !matches!(component, Component::Normal(_) | Component::CurDir) {
             return Err(format!(
-                "Componente de ruta no permitido en: '{}'",
+                "Path component not allowed in: '{}'",
                 sub_path.display()
             ));
         }
@@ -37,16 +37,16 @@ pub fn safe_join(base: &Path, relative: &str) -> Result<PathBuf, String> {
 /// null bytes and other special filesystem characters.
 pub fn validate_path_component(component: &str) -> Result<(), String> {
     if component.is_empty() {
-        return Err("El componente de ruta está vacío".into());
+        return Err("The path component is empty".into());
     }
     if component == "." || component == ".." {
-        return Err(format!("Componente de ruta no permitido: '{}'", component));
+        return Err(format!("Path component not allowed: '{}'", component));
     }
 
     const FORBIDDEN: &[char] = &['/', '\\', '\0', '<', '>', ':', '"', '|', '?', '*'];
     if component.chars().any(|c| FORBIDDEN.contains(&c)) {
         return Err(format!(
-            "El componente de ruta contiene caracteres no permitidos: '{}'",
+            "The path component contains disallowed characters: '{}'",
             component
         ));
     }
@@ -65,13 +65,13 @@ pub fn validate_filename(filename: &str) -> Result<(), String> {
 /// a generic filename because identifiers are also used as directory names.
 pub fn validate_identifier(id: &str) -> Result<(), String> {
     if id.is_empty() || id.len() > 64 {
-        return Err("El identificador no puede estar vacío ni superar 64 caracteres".into());
+        return Err("The identifier cannot be empty or exceed 64 characters".into());
     }
     if id == "." || id == ".." || id.contains(":") || id.contains('\0') {
-        return Err("El identificador contiene caracteres no permitidos".into());
+        return Err("The identifier contains disallowed characters".into());
     }
     if id.contains('/') || id.contains('\\') {
-        return Err("El identificador no puede contener separadores de ruta".into());
+        return Err("The identifier cannot contain path separators".into());
     }
     Ok(())
 }

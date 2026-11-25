@@ -2,67 +2,67 @@ use thiserror::Error;
 
 #[derive(Debug, Error)]
 pub enum InstanceError {
-    #[error("Instancia no encontrada")]
+    #[error("Instance not found")]
     NotFound,
 
-    #[error("Versión no encontrada: {0}")]
+    #[error("Version not found: {0}")]
     VersionNotFound(String),
 
-    #[error("Mod no encontrado")]
+    #[error("Mod not found")]
     ModNotFound,
 
-    #[error("La instancia ya ha sido lanzada")]
+    #[error("Instance is already running")]
     AlreadyStarted,
 
-    #[error("La instancia ya existe")]
+    #[error("Instance already exists")]
     AlreadyExists,
 
-    #[error("No se puede modificar una instancia mientras está en ejecución")]
+    #[error("Cannot modify an instance while it is running")]
     Busy,
 
-    #[error("Ya existe un options.txt en la instancia")]
+    #[error("This instance already has an options.txt")]
     OptionsExists,
 
-    #[error("Hay una operación de archivos en curso en esta instancia")]
+    #[error("A file operation is already in progress for this instance")]
     FileOperationInProgress,
 
-    #[error("Archivo de registro no encontrado")]
+    #[error("Log file not found")]
     LogNotFound,
 
-    #[error("Error al procesar el nombre del archivo")]
+    #[error("Error processing filename")]
     FilenameParse,
 
-    #[error("Error al procesar el nombre de la instancia: {0}")]
+    #[error("Invalid instance name: {0}")]
     InstNameParse(String),
 
-    #[error("Ruta de origen inválida")]
+    #[error("Invalid source path")]
     InvalidSourcePath,
 
-    #[error("No hay ningun runtime de Java seteado, se necesita Java {0}.")]
+    #[error("Java {0} is not installed. Install it in Settings > Java.")]
     JreNotFound(String),
 
-    #[error("No se pudo preparar minecraft.jar: {0}")]
+    #[error("Could not prepare minecraft.jar: {0}")]
     MinecraftJar(String),
 
-    #[error("Formato de instancia no reconocido en el archivo proporcionado")]
+    #[error("Unrecognized instance format in the provided file")]
     ImportInstanceFormatUnknown,
 
-    #[error("Archivo de instancia inválido o corrupto: {0}")]
+    #[error("Invalid or corrupted instance file: {0}")]
     ImportInstanceArchiveInvalid(String),
 
-    #[error("No se pudo extraer el archivo de instancia: {0}")]
+    #[error("Could not extract the instance archive: {0}")]
     ImportInstanceExtractionFailed(String),
 
-    #[error("No se pudo determinar la versión de Minecraft")]
+    #[error("Could not determine the Minecraft version")]
     ImportInstanceUnknownMinecraftVersion,
 
-    #[error("Sesión de preview de importación inválida o expirada")]
+    #[error("Invalid or expired import preview session")]
     ImportInstanceUnknownPreviewSession,
 
-    #[error("Loader no soportado en la instancia: {0}")]
+    #[error("Unsupported loader in instance: {0}")]
     ImportInstanceUnsupportedLoader(String),
 
-    #[error("Error del provider de importación {provider}: {message}")]
+    #[error("Import provider {provider} failed: {message}")]
     ImportInstanceProviderError { provider: String, message: String },
 
     #[error(transparent)]

@@ -2,25 +2,25 @@ use thiserror::Error;
 
 #[derive(Debug, Error)]
 pub enum AuthError {
-    #[error("Error al obtener el device code: {0}")]
+    #[error("Could not get device code: {0}")]
     DeviceCodeFailed(String),
 
-    #[error("Error al autenticar con Microsoft: {0}")]
+    #[error("Microsoft authentication failed: {0}")]
     AuthFailed(String),
 
-    #[error("Error al guardar los tokens: {0}")]
+    #[error("Could not save tokens: {0}")]
     SaveTokensFailed(String),
 
-    #[error("Error al eliminar los tokens: {0}")]
+    #[error("Could not delete tokens: {0}")]
     DeleteTokensFailed(String),
 
-    #[error("La tarea bloqueante falló: {0}")]
+    #[error("The blocking task failed: {0}")]
     SpawnBlocking(String),
 
-    #[error("La autenticación fue cancelada o expiró: {0}")]
+    #[error("Authentication was cancelled or expired: {0}")]
     AuthCancelled(String),
 
-    #[error("Sesión expirada. Inicia sesión de nuevo: {0}")]
+    #[error("Session expired. Sign in again: {0}")]
     SessionExpired(String),
 
     #[error(transparent)]
