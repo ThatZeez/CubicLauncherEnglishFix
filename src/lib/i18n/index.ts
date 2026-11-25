@@ -118,7 +118,7 @@ function removeCachedLocale(code: string): void {
 }
 
 function pruneCache(): void {
-	const active = launcherStore.settings?.language || "es";
+	const active = launcherStore.settings?.language || "en";
 	for (const code of flatCache.keys()) {
 		if (
 			flatCache.size <= MAX_CACHED_LOCALES &&
@@ -181,7 +181,7 @@ function getFlat(lang: string): Record<string, string> {
 		// Translation lookups may run inside a Svelte derived expression.
 		queueMicrotask(() => {
 			scheduled.delete(lang);
-			if ((launcherStore.settings?.language || "es") === lang)
+			if ((launcherStore.settings?.language || "en") === lang)
 				void downloadLocale(lang);
 		});
 	}
@@ -273,7 +273,7 @@ export function t(
 	key: string,
 	params?: Record<string, string | number>,
 ): string {
-	const lang = launcherStore.settings?.language || "es";
+	const lang = launcherStore.settings?.language || "en";
 	const flat = getFlat(lang);
 
 	const result = flat[key];

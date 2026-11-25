@@ -47,7 +47,7 @@ fn default_max_mem() -> u32 {
     2048
 }
 fn default_lang() -> CompactString {
-    CompactString::from("es")
+    CompactString::from("en")
 }
 fn default_true() -> bool {
     true
@@ -248,7 +248,7 @@ impl Default for SettingsManager {
             jre25_path: PathBuf::new(),
             jre25_managed: true,
             jre25_vendor: default_jre_vendor(),
-            language: CompactString::from("es"),
+            language: CompactString::from("en"),
             auto_updates: true,
             update_channel: CompactString::from("stable"),
             show_error_console: false,

@@ -209,7 +209,7 @@ fn test_default_values() {
     assert_eq!(s.active_user_idx, 0);
     assert_eq!(s.min_memory, 1024);
     assert_eq!(s.max_memory, 2048);
-    assert_eq!(s.language, "es");
+    assert_eq!(s.language, "en");
     assert!(s.auto_updates);
     assert!(s.close_launcher_on_play);
     assert!(!s.show_snapshots);
