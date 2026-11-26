@@ -45,7 +45,7 @@ pub fn import_theme(source_path: String) -> Result<ThemeEntry, String> {
     })?;
 
     let theme_file: ThemeFile = serde_json::from_str(&content).map_err(|e| {
-        CoreError::Other(format!("El archivo no es un theme válido: {}", e)).to_string()
+        CoreError::Other(format!("The file is not a valid theme: {}", e)).to_string()
     })?;
 
     let theme_id = build_theme_id(&theme_file.name, &theme_file.author)?;
@@ -55,7 +55,7 @@ pub fn import_theme(source_path: String) -> Result<ThemeEntry, String> {
     if theme_dir.exists() {
         error!("El theme '{}' ya existe", theme_file.name);
         return Err(CoreError::Other(format!(
-            "Ya existe un theme con el nombre '{}'",
+            "A theme named '{}' already exists",
             theme_file.name
         ))
         .to_string());
@@ -110,7 +110,7 @@ pub fn import_theme_cbth(cbth_path: String) -> Result<ThemeEntry, String> {
     info!("Importando theme CBTH desde '{}'", cbth_path);
     match import_zip_inner::<ThemeMeta>(&cbth_path)? {
         Some(entry) => Ok(entry),
-        None => Err(CoreError::Other("ZIP inválido: no se encontró Meta.toml".into()).to_string()),
+        None => Err(CoreError::Other("Invalid ZIP: Meta.toml not found".into()).to_string()),
     }
 }
 

@@ -175,7 +175,7 @@ impl ZipImportable for ThemeMeta {
     const ZIP_TARGET_FILE: &'static str = "Meta.toml";
 
     fn parse_import(content: &str) -> Result<Self, String> {
-        toml::from_str(content).map_err(|e| format!("Meta.toml inválido: {}", e))
+        toml::from_str(content).map_err(|e| format!("Invalid Meta.toml: {}", e))
     }
 
     fn import_name(&self) -> &str {
@@ -433,14 +433,14 @@ fn resolve_definition(
 ) -> Result<ThemeDef, String> {
     if depth > MAX_EXTENDS_DEPTH {
         return Err(format!(
-            "Herencia demasiado profunda: '{}' supera el máximo de {MAX_EXTENDS_DEPTH} niveles",
+            "Inheritance too deep: '{}' exceeds the maximum of {MAX_EXTENDS_DEPTH} levels",
             chain.join(" -> ")
         ));
     }
     if chain.iter().any(|seen| seen == id) {
         let mut cycle = chain.clone();
         cycle.push(id.to_string());
-        return Err(format!("Ciclo de herencia: {}", cycle.join(" -> ")));
+        return Err(format!("Inheritance cycle: {}", cycle.join(" -> ")));
     }
     chain.push(id.to_string());
 
@@ -457,12 +457,12 @@ fn resolve_definition(
     };
 
     let base_id = base_id.strip_prefix("user:").unwrap_or(base_id);
-    validate_identifier(base_id).map_err(|e| format!("Meta.toml: 'extends' inválido: {e}"))?;
+    validate_identifier(base_id).map_err(|e| format!("Meta.toml: invalid 'extends': {e}"))?;
 
     let base_dir = themes_root.join(base_id);
     if !base_dir.join("Meta.toml").is_file() {
         return Err(format!(
-            "Meta.toml: el tema base '{base_id}' no está instalado o no es V2"
+            "Meta.toml: base theme '{base_id}' is not installed or is not V2"
         ));
     }
 
@@ -584,7 +584,7 @@ pub(super) struct FlattenOutput {
 fn insert_var(out: &mut FlattenOutput, key: String, value: String) {
     if let Some(old) = out.variables.insert(key.clone(), value) {
         let warning = format!(
-            "Key collision en theme: '{}' fue sobrescrito (anterior: '{}')",
+            "Key collision in theme: '{}' was overwritten (previous: '{}')",
             key, old
         );
         warn!("{warning}");
@@ -683,7 +683,7 @@ pub(super) fn flatten_with_diagnostics(theme: &ThemeDef) -> FlattenOutput {
     for (k, v) in &theme.tokens {
         if !is_valid_token_name(k) {
             let warning = format!(
-                "Token '{}' inválido: debe empezar por '--' y usar solo letras, números, '_' o '-'",
+                "Token '{}' is invalid: must start with '--' and use only letters, numbers, '_' or '-'",
                 k
             );
             warn!("{warning}");
@@ -692,7 +692,7 @@ pub(super) fn flatten_with_diagnostics(theme: &ThemeDef) -> FlattenOutput {
         }
         if let Some(old) = out.variables.insert(k.clone(), v.clone()) {
             let warning = format!(
-                "El token '{}' colisiona con una variable generada; [tokens] gana (anterior: '{}')",
+                "The token '{}' collides with a generated variable; [tokens] wins (previous: '{}')",
                 k, old
             );
             warn!("{warning}");

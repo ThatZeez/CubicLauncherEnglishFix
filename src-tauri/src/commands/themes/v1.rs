@@ -132,7 +132,7 @@ impl Theme for ThemeFile {
             .to_string()
         })?;
         let mut theme: Self = serde_json::from_str(&content)
-            .map_err(|e| CoreError::Other(format!("Theme '{}' inválido: {}", id, e)).to_string())?;
+            .map_err(|e| CoreError::Other(format!("Invalid theme '{}': {}", id, e)).to_string())?;
 
         match resolve_background(theme_base, &mut theme.bg_image)? {
             Some(BgValidationError::TooLarge) => {
@@ -168,7 +168,7 @@ impl ZipImportable for ThemeFile {
     const ZIP_TARGET_FILE: &'static str = "theme.json";
 
     fn parse_import(content: &str) -> Result<Self, String> {
-        serde_json::from_str(content).map_err(|e| format!("theme.json inválido: {}", e))
+        serde_json::from_str(content).map_err(|e| format!("Invalid theme.json: {}", e))
     }
 
     fn import_name(&self) -> &str {

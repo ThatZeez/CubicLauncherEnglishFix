@@ -43,7 +43,7 @@ impl StagedTheme {
             Ok(meta) if meta.is_dir() => true,
             Ok(_) => {
                 return Err(format!(
-                    "Destino de theme no es un directorio: {:?}",
+                    "Theme destination is not a directory: {:?}",
                     destination
                 ));
             }
@@ -56,11 +56,11 @@ impl StagedTheme {
         if let Err(e) = std::fs::rename(self.root.join("theme"), destination) {
             if had_previous && let Err(rollback) = std::fs::rename(&backup, destination) {
                 return Err(format!(
-                    "Error instalando theme: {e}; error restaurando: {rollback}. Copia conservada en {}",
+                    "Could not install theme: {e}; rollback failed: {rollback}. Backup kept at {}",
                     backup.display()
                 ));
             }
-            return Err(format!("Error instalando theme: {e}"));
+            return Err(format!("Could not install theme: {e}"));
         }
         if had_previous && let Err(e) = std::fs::remove_dir_all(&backup) {
             warn!(
@@ -100,22 +100,20 @@ pub(super) fn stage_zip<T: ZipImportable>(
     })?;
 
     let mut archive = zip::ZipArchive::new(file)
-        .map_err(|e| CoreError::Other(format!("Archivo ZIP inválido: {}", e)).to_string())?;
+        .map_err(|e| CoreError::Other(format!("Invalid ZIP file: {}", e)).to_string())?;
 
     let target = T::ZIP_TARGET_FILE;
     let mut manifest = None;
     for i in 0..archive.len() {
         let entry = archive
             .by_index(i)
-            .map_err(|e| CoreError::Other(format!("Error leyendo ZIP: {}", e)).to_string())?;
+            .map_err(|e| CoreError::Other(format!("Could not read ZIP: {}", e)).to_string())?;
         let name = entry.name().map_err(|e| e.to_string())?.replace('\\', "/");
         if name == target || name.ends_with(&format!("/{target}")) {
             if manifest.is_some() {
-                return Err(CoreError::Other(format!(
-                    "ZIP inválido: múltiples {} encontrados",
-                    target
-                ))
-                .to_string());
+                return Err(
+                    CoreError::Other(format!("Invalid ZIP: multiple {} found", target)).to_string(),
+                );
             }
             manifest = Some((i, name));
         }
@@ -127,10 +125,10 @@ pub(super) fn stage_zip<T: ZipImportable>(
     let content = {
         let mut buf = String::new();
         let mut entry = archive.by_index(entry_index).map_err(|e| {
-            CoreError::Other(format!("Error leyendo {}: {}", target, e)).to_string()
+            CoreError::Other(format!("Could not read {}: {}", target, e)).to_string()
         })?;
         entry.read_to_string(&mut buf).map_err(|e| {
-            CoreError::Other(format!("Error leyendo {}: {}", target, e)).to_string()
+            CoreError::Other(format!("Could not read {}: {}", target, e)).to_string()
         })?;
         buf
     };
@@ -156,7 +154,7 @@ pub(super) fn stage_zip<T: ZipImportable>(
         for component in prefix_path.components() {
             if !matches!(component, Component::Normal(_) | Component::CurDir) {
                 return Err(
-                    CoreError::Other(format!("Prefijo ZIP inválido: '{}'", prefix)).to_string(),
+                    CoreError::Other(format!("Invalid ZIP prefix: '{}'", prefix)).to_string(),
                 );
             }
         }
@@ -174,7 +172,7 @@ pub(super) fn stage_zip<T: ZipImportable>(
     for i in 0..archive.len() {
         let mut entry = archive
             .by_index(i)
-            .map_err(|e| CoreError::Other(format!("Error leyendo ZIP: {}", e)).to_string())?;
+            .map_err(|e| CoreError::Other(format!("Could not read ZIP: {}", e)).to_string())?;
 
         let name = entry.name().map_err(|e| e.to_string())?.replace('\\', "/");
         if name.contains([':', '\0'])
@@ -182,7 +180,7 @@ pub(super) fn stage_zip<T: ZipImportable>(
                 .unix_mode()
                 .is_some_and(|mode| mode & 0o170000 == 0o120000)
         {
-            return Err(format!("Entrada ZIP insegura: {name}"));
+            return Err(format!("Unsafe ZIP entry: {name}"));
         }
         sanitize_path(&theme_dir, Path::new(&name))?;
         let enclosed: PathBuf = Path::new(&name)
@@ -206,12 +204,12 @@ pub(super) fn stage_zip<T: ZipImportable>(
 
         if name.ends_with('/') {
             std::fs::create_dir_all(&out_path)
-                .map_err(|e| format!("Error creando directorio {:?}: {}", out_path, e))?;
+                .map_err(|e| format!("Could not create directory {:?}: {}", out_path, e))?;
             continue;
         }
         if let Some(parent) = out_path.parent() {
             std::fs::create_dir_all(parent)
-                .map_err(|e| format!("Error creando directorio {:?}: {}", parent, e))?;
+                .map_err(|e| format!("Could not create directory {:?}: {}", parent, e))?;
         }
 
         let mut out_file = std::fs::File::create(&out_path).map_err(|e| {
@@ -257,7 +255,7 @@ pub fn export_theme(id: String, dest: String) -> Result<String, String> {
         return Err(FsError::InvalidPath(dest.clone()).to_string());
     }
     if output.extension().map(|e| e != "zip").unwrap_or(true) {
-        return Err(CoreError::Other("La exportación debe ser un archivo .zip".into()).to_string());
+        return Err(CoreError::Other("The export must be a .zip file".into()).to_string());
     }
 
     for component in output.components() {
@@ -303,10 +301,10 @@ pub(super) fn export_theme_directory(theme_dir: &Path, output: &Path) -> Result<
             let path = entry.path();
             let relative = path
                 .strip_prefix(prefix)
-                .map_err(|_| CoreError::Other("Error calculando ruta relativa".into()))?;
+                .map_err(|_| CoreError::Other("Could not compute relative path".into()))?;
             if path.is_dir() {
                 zip.add_directory(relative.to_string_lossy().replace('\\', "/"), options)
-                    .map_err(|e| CoreError::Other(format!("Error agregando directorio: {}", e)))?;
+                    .map_err(|e| CoreError::Other(format!("Could not add directory: {}", e)))?;
                 add_dir_to_zip(zip, &path, prefix, options)?;
             } else {
                 let data = std::fs::read(&path).map_err(|e| FsError::ReadFile {
@@ -314,9 +312,9 @@ pub(super) fn export_theme_directory(theme_dir: &Path, output: &Path) -> Result<
                     source: e,
                 })?;
                 zip.start_file(relative.to_string_lossy().replace('\\', "/"), options)
-                    .map_err(|e| CoreError::Other(format!("Error agregando archivo: {}", e)))?;
+                    .map_err(|e| CoreError::Other(format!("Could not add file: {}", e)))?;
                 std::io::Write::write_all(&mut *zip, &data)
-                    .map_err(|e| CoreError::Other(format!("Error escribiendo ZIP: {}", e)))?;
+                    .map_err(|e| CoreError::Other(format!("Could not write ZIP: {}", e)))?;
             }
         }
         Ok(())
@@ -326,7 +324,7 @@ pub(super) fn export_theme_directory(theme_dir: &Path, output: &Path) -> Result<
 
     zip_writer
         .finish()
-        .map_err(|e| CoreError::Other(format!("Error finalizando ZIP: {}", e)))?;
+        .map_err(|e| CoreError::Other(format!("Could not finish ZIP: {}", e)))?;
 
     Ok(())
 }

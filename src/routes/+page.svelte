@@ -363,7 +363,7 @@
 			if (
 				msg.includes("no se encontró theme.json") ||
 				msg.includes("no theme.json") ||
-				msg.includes("no se encontró Meta.toml")
+				msg.includes("Invalid ZIP: Meta.toml not found")
 			) {
 				droppedMrpackPath = null;
 				droppedInstanceZipPath = zipPath;
@@ -386,7 +386,7 @@
 			if (
 				msg.includes("no se encontró theme.json") ||
 				msg.includes("no theme.json") ||
-				msg.includes("no se encontró Meta.toml")
+				msg.includes("Invalid ZIP: Meta.toml not found")
 			) {
 				droppedMrpackPath = cbthPath;
 				openCreateModal = true;

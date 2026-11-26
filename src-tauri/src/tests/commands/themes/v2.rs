@@ -305,7 +305,7 @@ fn tokens_win_and_report_collisions() {
         output
             .warnings
             .iter()
-            .any(|warning| warning.contains("colisiona") && warning.contains("--accent"))
+            .any(|warning| warning.contains("collides") && warning.contains("--accent"))
     );
 }
 
@@ -322,7 +322,7 @@ fn invalid_token_names_are_skipped() {
         output
             .warnings
             .iter()
-            .any(|warning| warning.contains("inválido"))
+            .any(|warning| warning.contains("invalid"))
     );
 }
 
@@ -728,7 +728,7 @@ fn extends_cycle_is_an_error() {
 
     let error = V2Theme::load(&tree.theme("a"), "a").unwrap_err();
 
-    assert!(error.contains("Ciclo de herencia"), "{error}");
+    assert!(error.contains("Inheritance cycle"), "{error}");
     assert!(error.contains("a -> b -> a"), "{error}");
 }
 
@@ -740,7 +740,7 @@ fn extends_missing_base_is_an_error() {
 
     let error = V2Theme::load(&tree.theme("child"), "child").unwrap_err();
 
-    assert!(error.contains("no está instalado"), "{error}");
+    assert!(error.contains("is not installed"), "{error}");
 }
 
 #[test]
@@ -778,7 +778,7 @@ fn extends_depth_is_limited() {
 
     let error = V2Theme::load(&tree.theme("theme0"), "theme0").unwrap_err();
 
-    assert!(error.contains("demasiado profunda"), "{error}");
+    assert!(error.contains("too deep"), "{error}");
 }
 
 #[test]

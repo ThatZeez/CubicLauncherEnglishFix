@@ -215,7 +215,7 @@ fn token_collisions_produce_warnings() {
         report
             .warnings
             .iter()
-            .any(|warning| warning.contains("colisiona") && warning.contains("--accent"))
+            .any(|warning| warning.contains("collides") && warning.contains("--accent"))
     );
 }
 
