@@ -4,11 +4,11 @@ An unofficial fork of CubicLauncher for Linux with English as the default langua
 
 ## About
 
-Based on [CubicLauncher](https://github.com/CubicLauncherDevs/CubicLauncher) by the CubicLauncher developers (<https://cubiclauncher.org>). This fork is not affiliated with or endorsed by them.
+Based on [CubicLauncher](https://github.com/CubicLauncherDevs/CubicLauncher) by the CubicLauncher developers (<https://cubiclauncher.org>). This fork is not affiliated with or endorsed by them, and it does not plan to contribute changes back to the original project.
 
 It uses Tauri 2, Rust, Svelte 5/SvelteKit, TypeScript, and Bun, and is developed and tested on Linux (CachyOS with Hyprland). It is licensed under [GPL-3.0-only](LICENSE), inherited from upstream.
 
-This fork has no releases. Build it from source. The original project's releases are at <https://github.com/CubicLauncherDevs/CubicLauncher/releases>.
+This fork has no releases. The original project's releases are at <https://github.com/CubicLauncherDevs/CubicLauncher/releases>.
 
 ## Changes
 
@@ -37,28 +37,13 @@ Not implemented or verified yet:
 - Change the theme and language, and show activity in Discord.
 - Migrate from the official launcher, MultiMC and compatible forks, XMCL, and SKLauncher 4.
 
-## Build
-
-You need Git, Bun 1.x or newer, Node.js 20 or newer, Rust 1.85 or newer (edition 2024, with Cargo, rustfmt, and Clippy), and the [Tauri 2 system dependencies](https://v2.tauri.app/start/prerequisites/).
-
-```bash
-git clone https://github.com/ThatZeez/CubicLauncherEnglishFix.git
-cd CubicLauncherEnglishFix
-bun install --frozen-lockfile
-bun run tauri dev
-```
-
-`bun run dev` starts only the frontend; anything that needs the Tauri backend will not work outside Tauri. With Nix, run `nix develop` first. Build with `bun run tauri build`.
-
-Before committing, run `bun run lint`, `bun run check`, `bun run test:all`, `cargo fmt --all --check`, and `cargo clippy --workspace --locked -- -D warnings`. [TESTING.md](TESTING.md) and [CONTRIBUTING.md](CONTRIBUTING.md) have the full details; both are in Spanish.
-
 ## Limitations
 
 The app identifier is still `com.cubiclauncher.launcher` and data still lives under `~/.cubic`, so do not run this fork against data used by an installed original CubicLauncher. The updater still points at the original project's endpoints, so it updates to upstream releases rather than builds of this fork.
 
 ## Contributing and license
 
-Read [CONTRIBUTING.md](CONTRIBUTING.md), follow [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md), and see [TESTING.md](TESTING.md) for checks. The launcher and all workspace crates are [GPL-3.0-only](LICENSE).
+Build and test instructions are in [CONTRIBUTING.md](CONTRIBUTING.md) and [TESTING.md](TESTING.md). Participation is governed by [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md). The launcher and all workspace crates are [GPL-3.0-only](LICENSE).
 
 Translations for other locales are in the upstream [Translations](https://github.com/CubicLauncherDevs/Translations) repository. Versioning is described in [VERSIONING.md](VERSIONING.md).
 
